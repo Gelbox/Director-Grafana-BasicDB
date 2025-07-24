@@ -1,0 +1,744 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 108,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "default": false,
+        "type": "retrodaredevil-wildgraphql-datasource",
+        "uid": "edssu8z3r5r7ke"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "applyToRow": false,
+              "mode": "basic",
+              "type": "color-background",
+              "wrapText": false
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "fieldMinMax": true,
+          "mappings": [
+            {
+              "options": {
+                "OK": {
+                  "color": "green",
+                  "index": 0
+                },
+                "WARNING": {
+                  "color": "red",
+                  "index": 1
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bool"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "cellHeight": "md",
+        "footer": {
+          "countRows": false,
+          "enablePagination": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.2.0-73451",
+      "targets": [
+        {
+          "datasource": {
+            "type": "retrodaredevil-wildgraphql-datasource",
+            "uid": "edssu8z3r5r7ke"
+          },
+          "operationName": "Domains",
+          "parsingOptions": [
+            {
+              "dataPath": "domains",
+              "timeFields": [
+                {
+                  "timePath": "dateMillis"
+                }
+              ]
+            }
+          ],
+          "queryText": "query Domains {\n  domains {\n    name\n    status {\n      clocking\n      connectivity\n      latency\n      subscriptions\n      summary\n    }\n  }\n}",
+          "refId": "A"
+        }
+      ],
+      "title": "Alerts",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "status.clocking": false,
+              "status.connectivity": false,
+              "status.latency": false,
+              "status.subscriptions": false,
+              "status.summary": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "name": "Domains",
+              "status.clocking": "Clocking",
+              "status.connectivity": "Connectivity",
+              "status.latency": "Latency",
+              "status.subscriptions": "Subscriptions",
+              "status.summary": ""
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "retrodaredevil-wildgraphql-datasource",
+        "uid": "edssu8z3r5r7ke"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 15,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.2.0-73451",
+      "targets": [
+        {
+          "datasource": {
+            "type": "retrodaredevil-wildgraphql-datasource",
+            "uid": "edssu8z3r5r7ke"
+          },
+          "operationName": "Domains",
+          "parsingOptions": [
+            {
+              "dataPath": "domains",
+              "timeFields": [
+                {
+                  "timePath": "dateMillis"
+                }
+              ]
+            }
+          ],
+          "queryText": "query Domains {\n  domains {\n    name\n    status {\n      clocking\n      connectivity\n      latency\n      subscriptions\n      summary\n    }\n  }\n}",
+          "refId": "A"
+        }
+      ],
+      "title": "Clock Warnings",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "WARNING"
+                  }
+                },
+                "fieldName": "status.clocking"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "name"
+              ],
+              "reducer": "count"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "retrodaredevil-wildgraphql-datasource",
+        "uid": "edssu8z3r5r7ke"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 19,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.2.0-73451",
+      "targets": [
+        {
+          "datasource": {
+            "type": "retrodaredevil-wildgraphql-datasource",
+            "uid": "edssu8z3r5r7ke"
+          },
+          "operationName": "Domains",
+          "parsingOptions": [
+            {
+              "dataPath": "domains",
+              "timeFields": [
+                {
+                  "timePath": "dateMillis"
+                }
+              ]
+            }
+          ],
+          "queryText": "query Domains {\n  domains {\n    name\n    status {\n      clocking\n      connectivity\n      latency\n      subscriptions\n      summary\n    }\n  }\n}",
+          "refId": "A"
+        }
+      ],
+      "title": "Latency Warnings",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "WARNING"
+                  }
+                },
+                "fieldName": "status.latency"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "name"
+              ],
+              "reducer": "count"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "retrodaredevil-wildgraphql-datasource",
+        "uid": "edssu8z3r5r7ke"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 15,
+        "y": 5
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.2.0-73451",
+      "targets": [
+        {
+          "datasource": {
+            "type": "retrodaredevil-wildgraphql-datasource",
+            "uid": "edssu8z3r5r7ke"
+          },
+          "operationName": "Domains",
+          "parsingOptions": [
+            {
+              "dataPath": "domains",
+              "timeFields": [
+                {
+                  "timePath": "dateMillis"
+                }
+              ]
+            }
+          ],
+          "queryText": "query Domains {\n  domains {\n    name\n    status {\n      clocking\n      connectivity\n      latency\n      subscriptions\n      summary\n    }\n  }\n}",
+          "refId": "A"
+        }
+      ],
+      "title": "Subscription Warnings",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "WARNING"
+                  }
+                },
+                "fieldName": "status.subscriptions"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "name"
+              ],
+              "reducer": "count"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "retrodaredevil-wildgraphql-datasource",
+        "uid": "edssu8z3r5r7ke"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 19,
+        "y": 5
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.2.0-73451",
+      "targets": [
+        {
+          "datasource": {
+            "type": "retrodaredevil-wildgraphql-datasource",
+            "uid": "edssu8z3r5r7ke"
+          },
+          "operationName": "Domains",
+          "parsingOptions": [
+            {
+              "dataPath": "domains",
+              "timeFields": [
+                {
+                  "timePath": "dateMillis"
+                }
+              ]
+            }
+          ],
+          "queryText": "query Domains {\n  domains {\n    name\n    status {\n      clocking\n      connectivity\n      latency\n      subscriptions\n      summary\n    }\n  }\n}",
+          "refId": "A"
+        }
+      ],
+      "title": "Connectivity Warnings",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "WARNING"
+                  }
+                },
+                "fieldName": "status.connectivity"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "name"
+              ],
+              "reducer": "count"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "retrodaredevil-wildgraphql-datasource",
+        "uid": "edssu8z3r5r7ke"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 200
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 14,
+        "x": 0,
+        "y": 9
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "values": true
+        },
+        "showPercentChange": false,
+        "text": {
+          "valueSize": 22
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.2.0-73451",
+      "targets": [
+        {
+          "datasource": {
+            "type": "retrodaredevil-wildgraphql-datasource",
+            "uid": "edssu8z3r5r7ke"
+          },
+          "parsingOptions": [
+            {
+              "dataPath": "domains",
+              "timeFields": [
+                {
+                  "timePath": "dateMillis"
+                }
+              ]
+            }
+          ],
+          "queryText": "query {\n  domains {\n    name\n    devices {\n      id\n    }\n  }\n}\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Number of Devices Per Domain",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "devices.0.id": false,
+              "devices.1.id": false,
+              "devices.2.id": false,
+              "devices.3.id": false,
+              "devices.4.id": false,
+              "devices.5.id": false,
+              "name": false
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "devices.0.id",
+                "devices.1.id",
+                "devices.2.id",
+                "devices.3.id",
+                "devices.4.id",
+                "devices.5.id"
+              ],
+              "reducer": "changeCount"
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Change Count": false,
+              "devices.0.id": true,
+              "devices.1.id": true,
+              "devices.2.id": true,
+              "devices.3.id": true,
+              "devices.4.id": true,
+              "devices.5.id": true,
+              "name": false
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    }
+  ],
+  "refresh": "auto",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Director-Native-GraphQL",
+  "uid": "bdssufetiklj4a",
+  "version": 33,
+  "weekStart": ""
+}
